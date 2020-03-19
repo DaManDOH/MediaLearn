@@ -23,7 +23,7 @@ fun rgbaToYuv(rgba: ByteArray, width: Int, height: Int, yuv: ByteArray) {
     var Y: Int
     var U: Int
     var V: Int
-    var index = 0
+    var index : Int
     for (j in 0 until height) {
         for (i in 0 until width) {
             index = j * width + i

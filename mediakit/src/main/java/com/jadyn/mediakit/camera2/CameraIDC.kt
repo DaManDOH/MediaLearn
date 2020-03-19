@@ -4,7 +4,6 @@ import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CameraMetadata
-import androidx.annotation.IntRange
 import android.util.ArrayMap
 import android.util.Size
 import com.jadyn.ai.kotlind.utils.isValid
@@ -16,8 +15,8 @@ import com.jadyn.ai.kotlind.utils.isValid
  *@Since:2019-07-26
  *@ChangeList:
  */
-class CameraIDC(cameraMgr: CameraManager,
-                @IntRange(from = 0, to = 1) defLoc: Int = 1) {
+//class CameraIDC(cameraMgr: CameraManager, IntRange(from = 0, to = 1) defLoc: Int = 1) {
+class CameraIDC(cameraMgr: CameraManager, defLoc: Int = 1) {
     private val ids by lazy {
         Array(2) { "" }
     }
@@ -46,7 +45,7 @@ class CameraIDC(cameraMgr: CameraManager,
                 } else if (this == CameraMetadata.LENS_FACING_BACK) {
                     ids[1] = cameraId
                 }
-                idData[cameraId] = map.getOutputSizes(SurfaceTexture::class.java)
+                idData[cameraId] = map!!.getOutputSizes(SurfaceTexture::class.java)
             }
         }
         val s = ids[curLoc]
@@ -70,7 +69,8 @@ class CameraIDC(cameraMgr: CameraManager,
         return getCameraSizeInfo(curLoc)
     }
 
-    fun getCameraSizeInfo(@IntRange(from = 0L, to = 1L) index: Int): Array<Size> {
+//    fun getCameraSizeInfo(@IntRange(from = 0L, to = 1L) index: Int): Array<Size> {
+    fun getCameraSizeInfo(index: Int): Array<Size> {
         return idData.getOrDefault(ids[index], arrayOf())
     }
 }

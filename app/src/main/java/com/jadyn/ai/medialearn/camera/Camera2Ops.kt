@@ -51,19 +51,19 @@ class Camera2Ops(val activity: AppCompatActivity, val size: Size,
 
     private val stateCallback by lazy {
         object : CameraDevice.StateCallback() {
-            override fun onOpened(camera: CameraDevice?) {
+            override fun onOpened(camera: CameraDevice) {
                 Log.d(TAG, " open: ")
                 cameraDevice = camera
                 startPreview()
             }
 
-            override fun onDisconnected(camera: CameraDevice?) {
+            override fun onDisconnected(camera: CameraDevice) {
                 Log.d(TAG, " onDisconnected ")
                 cameraDevice?.close()
                 cameraDevice = null
             }
 
-            override fun onError(camera: CameraDevice?, error: Int) {
+            override fun onError(camera: CameraDevice, error: Int) {
                 Log.d(TAG, " onError: $error ")
             }
 
@@ -82,9 +82,9 @@ class Camera2Ops(val activity: AppCompatActivity, val size: Size,
                     continue
                 }
                 val map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
-                mPreviewSize = getOptimalSize(map.getOutputSizes(SurfaceTexture::class.java),
+                mPreviewSize = getOptimalSize(map!!.getOutputSizes(SurfaceTexture::class.java),
                         size.width, size.height)
-                mCaptureSize = Collections.max(Arrays.asList(*map.getOutputSizes(ImageFormat.JPEG))) { lhs, rhs ->
+                mCaptureSize = Collections.max(listOf(*map.getOutputSizes(ImageFormat.JPEG))) { lhs, rhs ->
                     java.lang.Long.signum((lhs.width * lhs.height - rhs.height * rhs.width).toLong())
                 }
                 mCameraId = cameraId
@@ -116,11 +116,11 @@ class Camera2Ops(val activity: AppCompatActivity, val size: Size,
                     builder?.addTarget(this)
                 }
                 createCaptureSession(list, object : CameraCaptureSession.StateCallback() {
-                    override fun onConfigureFailed(session: CameraCaptureSession?) {
+                    override fun onConfigureFailed(session: CameraCaptureSession) {
 
                     }
 
-                    override fun onConfigured(session: CameraCaptureSession?) {
+                    override fun onConfigured(session: CameraCaptureSession) {
                         cameraSession = session
                         updatePreview()
                     }
@@ -183,11 +183,11 @@ class Camera2Ops(val activity: AppCompatActivity, val size: Size,
                 builder?.addTarget(encoderSurface)
                 list.add(encoderSurface) 
                 createCaptureSession(list, object : CameraCaptureSession.StateCallback() {
-                    override fun onConfigureFailed(session: CameraCaptureSession?) {
+                    override fun onConfigureFailed(session: CameraCaptureSession) {
                         Log.d(TAG, "onConfigureFailed:")
                     }
 
-                    override fun onConfigured(session: CameraCaptureSession?) {
+                    override fun onConfigured(session: CameraCaptureSession) {
                         Log.d(TAG, "onConfigured :${Thread.currentThread().name} ")
                         cameraSession = session
                         updatePreview()

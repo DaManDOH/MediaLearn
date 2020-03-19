@@ -120,7 +120,7 @@ class VideoEncoder(private val width: Int, private val height: Int,
                     throw RuntimeException("muxer hasn't started")
                 }
                 Log.d(TAG, "buffer info offset ${bufferInfo.offset} time is ${bufferInfo.presentationTimeUs} ")
-                encodedData.position(bufferInfo.offset)
+                encodedData!!.position(bufferInfo.offset)
                 encodedData.limit(bufferInfo.offset + bufferInfo.size)
                 mediaMuxer!!.writeSampleData(trackIndex, encodedData, bufferInfo)
                 Log.d(TAG, "sent " + bufferInfo.size + " bytes to muxer")

@@ -2,9 +2,9 @@ package com.jadyn.mediakit.video.decode
 
 import android.graphics.Bitmap
 import android.os.Environment
-import androidx.collection.LruCache
 import android.text.TextUtils
 import android.util.Log
+import android.util.LruCache
 import com.jadyn.mediakit.function.md5
 
 /**
@@ -23,11 +23,10 @@ class FrameCache(dataSource: String) {
         // Use 1/8th of the available memory for this memory cache.
         val cacheSize = maxMemory / 12
         object : LruCache<String, Bitmap>(cacheSize) {
-            override fun sizeOf(key: String?, value: Bitmap?): Int {
-                value?.apply {
+            override fun sizeOf(key: String, value: Bitmap): Int {
+                value.apply {
                     return byteCount
                 }
-                return super.sizeOf(key, value)
             }
         }
     }

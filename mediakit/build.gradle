@@ -5,11 +5,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
-
+    compileSdkVersion 29
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -18,7 +17,7 @@ android {
         ndk {
             stl "stlport_static"
             moduleName "gljni"
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86_64"
         }
         sourceSets.main {
             jni.srcDirs = []
@@ -39,6 +38,11 @@ android {
             path "src/main/jni/Android.mk"
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    buildToolsVersion = '29.0.3'
 
 }
 
@@ -49,12 +53,12 @@ androidExtensions {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
 
-//    api "io.reactivex.rxjava2:rxjava:2.1.12"
-//    api "io.reactivex.rxjava2:rxandroid:2.0.2"
+    api "io.reactivex.rxjava2:rxjava:2.1.12"
+    api "io.reactivex.rxjava2:rxandroid:2.0.2"
 
-    api 'com.jadynai.ai.kotlind:KotlinD:1.0.5'
-
-    api 'androidx.appcompat:appcompat:1.0.2'
+    api 'com.jadynai.ai.kotlind:KotlinD:1.1.0'
+    
+//    api 'androidx.appcompat:appcompat:1.1.0'
 }

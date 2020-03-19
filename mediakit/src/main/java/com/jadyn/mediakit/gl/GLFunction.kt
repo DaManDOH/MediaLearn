@@ -1,11 +1,12 @@
 package com.jadyn.mediakit.gl
 
 import android.app.ActivityManager
+import android.app.Application
 import android.content.Context
 import android.opengl.EGL14
 import android.opengl.GLES20
 import android.util.Log
-import com.jadyn.ai.kotlind.base.BaseApplication
+import com.jadyn.ai.kotlind.base.KD
 
 /**
  *@version:
@@ -154,7 +155,8 @@ fun checkLocation(location: Int, label: String) {
 }
 
 fun glVersion(): Int {
-    val am = BaseApplication.instance.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+//    val am = BaseApplication.instance.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val am = KD.applicationWrapper().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
     val info = am.deviceConfigurationInfo ?: return 0
     return info.reqGlEsVersion
 }

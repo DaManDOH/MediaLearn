@@ -5,7 +5,7 @@ import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
-import androidx.core.widget.toast
+import android.widget.Toast
 import com.jadyn.ai.medialearn.R
 import com.jadyn.mediakit.video.decode.VideoDecoder
 import kotlinx.android.synthetic.main.activity_decode.*
@@ -33,7 +33,7 @@ class DecodeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_decode)
 
-        // 2019/2/14-16:25 设置一个默认的测试视频地址
+        // 2019/2/14-16:25 set a default test video address
         file_et.setText(decodeMP4Path)
         resetOutputEt()
 
@@ -48,7 +48,7 @@ class DecodeActivity : AppCompatActivity() {
 
         switch_iv.setOnClickListener {
             if (videoDecoder != null) {
-                toast("正在解码中")
+                Toast.makeText(this, "Decoding", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -60,7 +60,7 @@ class DecodeActivity : AppCompatActivity() {
             checkFile()
             checkOutputPath()
             if (videoDecoder != null) {
-                toast("正在解码中")
+                Toast.makeText(this, "Decoding", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -72,8 +72,8 @@ class DecodeActivity : AppCompatActivity() {
                 videoDecoder = null
             }, {
                 this@DecodeActivity.runOnUiThread {
-                    val s = if (switch_iv.isSelected) "OpenGL渲染" else "YUV存储"
-                    output_loading_tv.text = TextUtils.concat(s, "解码中，第${it}张")
+                    val s = if (switch_iv.isSelected) "OpenGL render" else "YUV memory"
+                    output_loading_tv.text = TextUtils.concat(s, " decoding, frame $it")
                 }
             })
         }
@@ -82,7 +82,7 @@ class DecodeActivity : AppCompatActivity() {
     private fun checkOutputPath() {
         val f = output_et.text.toString()
         if (f.isBlank()) {
-            toast("不能为空")
+            Toast.makeText(this, "Cannot be empty", Toast.LENGTH_SHORT).show()
             return
         }
         val file = File(f)
@@ -90,7 +90,7 @@ class DecodeActivity : AppCompatActivity() {
             file.mkdirs()
         }
         if (!file.isDirectory) {
-            toast("必须为文件夹")
+            Toast.makeText(this, "Must be a folder", Toast.LENGTH_SHORT).show()
             resetOutputEt()
             return
         }
@@ -100,12 +100,12 @@ class DecodeActivity : AppCompatActivity() {
     private fun checkFile() {
         val f = file_et.text.toString()
         if (f.isBlank()) {
-            toast("不能为空")
+            Toast.makeText(this, "Cannot be empty", Toast.LENGTH_SHORT).show()
             return
         }
         val file = File(f)
         if (!file.exists() || !file.isFile) {
-            toast("文件错误")
+            Toast.makeText(this, "File error", Toast.LENGTH_SHORT).show()
             file_et.setText("")
             return
         }

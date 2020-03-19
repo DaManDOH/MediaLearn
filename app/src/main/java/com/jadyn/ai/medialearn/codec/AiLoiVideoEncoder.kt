@@ -108,7 +108,7 @@ class AiLoiVideoEncoder(private val width: Int, private val height: Int,
             frameCount++
 
             inputSurface.draw()
-            Log.d(TAG, "present: " + (surfaceTexture!!.timestamp - startWhen) / 1000000.0 + "ms")
+            Log.d(TAG, "present: " + (surfaceTexture.timestamp - startWhen) / 1000000.0 + "ms")
             inputSurface.swapData(surfaceTexture.timestamp)
         }
         drainEncoder(true)
@@ -149,7 +149,7 @@ class AiLoiVideoEncoder(private val width: Int, private val height: Int,
                     if (!muxerStarted) {
                         throw RuntimeException("muxer hasn't started")
                     }
-                    encodedData.position(bufferInfo.offset)
+                    encodedData!!.position(bufferInfo.offset)
                     encodedData.limit(bufferInfo.offset + bufferInfo.size)
 
                     mediaMuxer!!.writeSampleData(trackIndex, encodedData, bufferInfo)

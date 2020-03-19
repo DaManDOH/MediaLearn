@@ -40,7 +40,7 @@ class CutOutActivity : AppCompatActivity() {
         }
         cutout_list.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1,
                 listFiles)
-        cutout_list.setOnItemClickListener { parent, view, position, id ->
+        cutout_list.setOnItemClickListener { _, _, position, _ ->
             videoDecoder2Compat.setDataSource(listFiles[position])
         }
     }

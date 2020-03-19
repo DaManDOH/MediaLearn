@@ -45,7 +45,7 @@ class CameraMgr(private var activity: SoftReference<Activity>, size: Size) {
     lateinit var previewSize: Size
         private set
 
-    private var workerThread: HandlerThread? = null
+    private lateinit var workerThread: HandlerThread
     private var workerHandler: Handler? = null
 
     private val surfaceCompose by lazy {
@@ -59,13 +59,11 @@ class CameraMgr(private var activity: SoftReference<Activity>, size: Size) {
     private var imageReader: ImageReader? = null
     private val stateCallback by lazy {
         object : CameraDevice.StateCallback() {
-            override fun onOpened(camera: CameraDevice?) {
+            override fun onOpened(camera: CameraDevice) {
                 Log.d(TAG, " open: ")
-                if (workerThread == null) {
-                    workerThread = HandlerThread("Camera2Run")
-                    workerThread?.start()
-                    workerHandler = Handler(workerThread?.looper)
-                }
+                workerThread = HandlerThread("Camera2Run")
+                workerThread.start()
+                workerHandler = Handler(workerThread.looper)
                 cameraDevice = camera
                 if (imageReader == null) {
                     imageReader = ImageReader.newInstance(previewSize.width, previewSize.height
@@ -89,13 +87,13 @@ class CameraMgr(private var activity: SoftReference<Activity>, size: Size) {
                 startPreview()
             }
 
-            override fun onDisconnected(camera: CameraDevice?) {
+            override fun onDisconnected(camera: CameraDevice) {
                 Log.d(TAG, " onDisconnected ")
                 cameraDevice?.close()
                 cameraDevice = null
             }
 
-            override fun onError(camera: CameraDevice?, error: Int) {
+            override fun onError(camera: CameraDevice, error: Int) {
                 Log.d(TAG, " onError: $error ")
             }
 
@@ -133,12 +131,12 @@ class CameraMgr(private var activity: SoftReference<Activity>, size: Size) {
             val map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP)
 
             // 选出最大的size,比较方式为 width*height 值的大小 
-            val largest = Collections.max(Arrays.asList(*map.getOutputSizes(ImageFormat.JPEG)),
+            val largest = Collections.max(listOf(*map!!.getOutputSizes(ImageFormat.JPEG)),
                     CompareSizesByArea())
 
             // 预览的宽高需要根据此时屏幕的旋转角度，以及设备自身的“调整角度”来配合
             val displayRotation = act.windowManager.defaultDisplay.rotation
-            sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)
+            sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION)!!
             val swappedDimensions = areDimensionsSwapped(displayRotation, sensorOrientation)
 
             val displaySize = Point(screenWidth, screenHeight)
@@ -273,10 +271,9 @@ class CameraMgr(private var activity: SoftReference<Activity>, size: Size) {
     fun onDestroy() {
         Log.d(TAG, "camera2 mgr destroy")
         workerHandler?.removeCallbacksAndMessages(null)
-        workerThread?.quitSafely()
+        workerThread.quitSafely()
         try {
-            workerThread?.join()
-            workerThread = null
+            workerThread.join()
             workerHandler = null
         } catch (e: InterruptedException) {
             Log.e(TAG, e.toString())

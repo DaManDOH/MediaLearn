@@ -35,7 +35,7 @@ class Camera2Activity : AppCompatActivity() {
         }
         RxPermissions(this).request(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .doOnNext { result ->
+                .doOnNext { _ ->
                     texture_view.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
                         override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
                         }

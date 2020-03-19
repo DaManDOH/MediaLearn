@@ -31,7 +31,7 @@ class VideoDecoder(private val dataSource: String?,
             } else {
                 success.invoke()
             }
-        }) { index, bmp, videoInfo ->
+        }) { index, bmp, _ ->
             process.invoke(index)
             val file = File(outputFiles, String.format("frame-%02d.jpg", index))
             bmp.invoke().saveFrame(file.toString())

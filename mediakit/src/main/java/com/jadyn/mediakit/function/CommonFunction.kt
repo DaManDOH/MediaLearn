@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.ImageFormat
 import android.media.Image
 import android.media.MediaCodecInfo
-import androidx.annotation.IntRange
 import android.util.Log
 import java.io.BufferedOutputStream
 import java.io.File
@@ -130,7 +129,8 @@ fun ByteBuffer.getNoException(dst: ByteArray, offset: Int, length: Int): ByteBuf
     return get(dst, offset, realLength)
 }
 
-fun Bitmap.saveFrame(fileName: String, @IntRange(from = 1, to = 100) quality: Int = 100) {
+//fun Bitmap.saveFrame(fileName: String, @IntRange(from = 1, to = 100) quality: Int = 100) {
+fun Bitmap.saveFrame(fileName: String, quality: Int = 100) {
     var bos: BufferedOutputStream? = null
     try {
         File(fileName).makeParent()

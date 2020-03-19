@@ -9,6 +9,7 @@ import android.util.Log
 import com.jadyn.mediakit.function.getDataByte
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.util.*
 
 /**
  *@version:
@@ -29,15 +30,20 @@ class YuvCore : DecodeCore() {
             // YUV输出JPEG。使用Image时，先拿到image数据再releaseOutputBuffer
             decoder.getOutputBuffer(outputBufferId)
             val image = decoder.getOutputImage(outputBufferId)
-            if (outputFrameCount <= 1) {
-                Log.d(TAG, "output Image format ${image.format}: ")
+            if (null != image) {
+                if (outputFrameCount <= 1) {
+                    Log.d(TAG, "output Image format ${image.format}: ")
+                }
+                val fileName = DecoderFormat.JPG.outputFrameFileName(outputDir,
+                        outputFrameCount)
+                val toJpgSuccess = DecoderFormat.JPG.compressCorrespondingFile(fileName, image)
+                image.close()
+                decoder.releaseOutputBuffer(outputBufferId, true)
+                return if (toJpgSuccess) outputFrameCount else -1
+            } else {
+                decoder.releaseOutputBuffer(outputBufferId, true)
+                return -1
             }
-            val fileName = DecoderFormat.JPG.outputFrameFileName(outputDir,
-                    outputFrameCount)
-            val toJpgSuccess = DecoderFormat.JPG.compressCorrespondingFile(fileName, image)
-            image?.close()
-            decoder.releaseOutputBuffer(outputBufferId, true)
-            return if (toJpgSuccess) outputFrameCount else -1
         }
         decoder.releaseOutputBuffer(outputBufferId, true)
         return -1

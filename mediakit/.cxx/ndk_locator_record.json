@@ -1,5 +1,5 @@
 {
-  "ndkFolder": "/Users/jadynai/Developer/SDK/ndk-bundle",
+  "ndkFolder": "C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669",
   "messages": [
     {
       "level": "INFO",
@@ -7,7 +7,7 @@
     },
     {
       "level": "INFO",
-      "message": "ndk.dir in local.properties is /Users/jadynai/Developer/SDK/ndk-bundle"
+      "message": "ndk.dir in local.properties is C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669"
     },
     {
       "level": "INFO",
@@ -15,27 +15,23 @@
     },
     {
       "level": "INFO",
-      "message": "sdkFolder is /Users/jadynai/Developer/SDK"
+      "message": "sdkFolder is C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk"
     },
     {
       "level": "INFO",
-      "message": "Considering /Users/jadynai/Developer/SDK/ndk-bundle by ndk.dir"
+      "message": "Considering C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669 by ndk.dir"
     },
     {
       "level": "INFO",
-      "message": "Considering /Users/jadynai/Developer/SDK/ndk-bundle in SDK ndk-bundle folder"
+      "message": "Considering C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk\\ndk-bundle in SDK ndk-bundle folder"
     },
     {
       "level": "INFO",
-      "message": "Considering /Users/jadynai/Developer/SDK/ndk/20.0.5594570 in SDK ndk folder"
+      "message": "Considering C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669 in SDK ndk folder"
     },
     {
       "level": "INFO",
-      "message": "Considering /Users/jadynai/Developer/SDK/ndk/android-ndk-r13b in SDK ndk folder"
-    },
-    {
-      "level": "INFO",
-      "message": "Found requested ndk.dir (/Users/jadynai/Developer/SDK/ndk-bundle) which has version 20.0.5594570"
+      "message": "Found requested ndk.dir (C:\\Users\\danwl\\AppData\\Local\\Android\\Sdk\\ndk\\21.0.6113669) which has version 21.0.6113669"
     }
   ]
 }

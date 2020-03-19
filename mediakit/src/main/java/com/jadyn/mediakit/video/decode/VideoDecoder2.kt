@@ -98,7 +98,7 @@ class VideoDecoder2(private val dataSource: String) {
     private fun getInternalFrame(target: Long, success: (Bitmap) -> Unit,
                                  failed: (Throwable) -> Unit) {
         // 是否需要缓存，不需要的话就直接解码。需要缓存则优先从缓存中读取
-        frameCache.asyncGetTarget(target, true, { time, bitmap ->
+        frameCache.asyncGetTarget(target, true, { _, bitmap ->
             success.invoke(bitmap)
         }, {
             // 如果此时正在取这一帧，就不作任何处理

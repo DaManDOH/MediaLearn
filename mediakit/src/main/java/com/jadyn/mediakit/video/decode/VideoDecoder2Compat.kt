@@ -1,5 +1,6 @@
 package com.jadyn.mediakit.video.decode
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
@@ -53,11 +54,12 @@ class VideoDecoder2Compat(private val success: (Bitmap) -> Unit) {
 
     private var isStart = false
 
+    @SuppressLint("CheckResult")
     fun setDataSource(dataSource: String) {
         if (decoderDisposable != null) {
             stop()
         }
-        val subscribe = Single.just("")
+        Single.just("")
                 .subscribeOn(scheduler)
                 .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

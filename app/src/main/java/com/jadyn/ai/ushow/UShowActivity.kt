@@ -2,7 +2,7 @@ package com.jadyn.ai.ushow
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.jadyn.ai.medialearn.R
 import com.jadyn.ai.presenter.ushow.UShowViewModel
 
@@ -15,10 +15,11 @@ import com.jadyn.ai.presenter.ushow.UShowViewModel
  */
 class UShowActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: UShowViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ushow)
-        ViewModelProviders.of(this).get(UShowViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(UShowViewModel::class.java)
     }
 }
